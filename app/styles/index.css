@@ -1,0 +1,14 @@
+
+.nav-link{
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.nav-link:hover, .nav-link.active{
+    text-decoration: none;
+    color: white;
+    padding-left: 16px;
+    padding-right: 16px;
+}
