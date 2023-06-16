@@ -1,0 +1,18 @@
+.wrapper{
+    display: flex ;
+    flex-direction: row ;
+    align-items: center;
+    margin-top: 100px !important;
+}
+
+.link {
+    color: #011e3c;
+}
+
+.title {
+    margin-left: 16px !important;
+}
+
+.divider {
+    margin-top: 8px !important;
+}
