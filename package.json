@@ -5,7 +5,8 @@
     "build": "remix build",
     "dev": "remix dev",
     "start": "remix-serve build",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "serverdev": "nodemon server/index.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -16,6 +17,7 @@
     "@remix-run/node": "^1.17.0",
     "@remix-run/react": "^1.17.0",
     "@remix-run/serve": "^1.17.0",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "formik": "^2.4.2",
     "isbot": "^3.6.8",
@@ -29,6 +31,7 @@
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
     "eslint": "^8.38.0",
+    "nodemon": "^2.0.22",
     "typescript": "^5.0.4"
   },
   "engines": {

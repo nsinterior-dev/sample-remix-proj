@@ -1,33 +1,57 @@
-import { Container} from "@mui/material";
-import { useLoaderData } from "@remix-run/react";
+import { Box, Container, Divider, Typography } from '@mui/material';
+import { useLoaderData, useActionData } from '@remix-run/react';
 
-import NewNote, {links as newNoteLinks} from "~/components/new note";
+import NoteForm from '~/components/newNote/noteform';
+import NoteList from '~/components/newNote/notelist';
 
-export default function NotesPage(){
-    const data = useLoaderData()
-    
-    return (
-        <Container sx={{marginY: 10}} >
-            <NewNote notes={data} />
-        </Container>
-    )
+import styles from '~/components/newNote/index.css'
+
+import { getNotes, createNote } from '~/api/index';
+import { json, type ActionArgs } from '@remix-run/node';
+
+export default function NotesPage() {
+  const data = useLoaderData();
+  const newData = useActionData()
+
+  return (
+    <Container sx={{ marginTop: 15 }}>
+      <div>
+        <Typography className='title' variant='h3'>
+          My Notes
+        </Typography>
+        <Divider className='divider' />
+      </div>
+      <Box
+        sx={{ display: 'flex', flexDirection: 'row', padding: 2, marginTop: 2 }}
+      >
+        <NoteForm />
+        <NoteList data={data} />
+      </Box>
+    </Container>
+  );
 }
 
-
-export async function loader(){
-    console.log(process.env.SOME_SECRET)
-    return [
-        {
-            title: "hello there",
-            content: "wish u a merry christmas"
-        },
-        {
-            title: "hello sdasdthere",
-            content: "wish sadsadu a merry christmas"
-        },
-    ]
+export async function loader() {
+  const data = await getNotes();
+  return data || null;
 }
 
-export function links(){
-    return [...newNoteLinks()]
+export async function action({request}: ActionArgs) {
+ const form = await request.formData()
+ const title = form.get('title')
+ const content = form.get('content')
+
+ const fields = {title, content}
+ console.log(fields)
+
+ await createNote({body: fields })
+
+ return json({body: fields})
+}
+
+export function links() {
+    return [{
+        rel: 'stylesheet',
+        href: styles
+    }];
 }
