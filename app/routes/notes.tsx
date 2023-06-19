@@ -44,9 +44,9 @@ export async function action({request}: ActionArgs) {
  const fields = {title, content}
  console.log(fields)
 
- await createNote({body: fields })
+ await createNote({ title, content})
 
- return json({body: fields})
+ return json({fields})
 }
 
 export function links() {
