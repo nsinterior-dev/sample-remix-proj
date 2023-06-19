@@ -7,7 +7,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import MainNavigation from "./components/main navigation";
+import MainNavigation from "./components/mainNavigation";
 
 import styles from '~/styles/index.css'
 
