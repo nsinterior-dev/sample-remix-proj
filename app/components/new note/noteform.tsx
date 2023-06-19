@@ -1,35 +1,50 @@
-import { Box, Button, TextField, Divider } from '@mui/material'
-import { Formik } from 'formik'
-import React from 'react'
+import { Box, Button, TextField, Divider } from '@mui/material';
+import { Form } from '@remix-run/react';
+import { useFormik } from 'formik';
 
 const NoteForm = () => {
+  const initialValues = {
+    title: '',
+    content: '',
+  };
+
+  function onSubmit(values: any) {
+    console.log(values);
+    formik.setSubmitting(false)
+  }
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit
+  })
+
+//   console.log(formik.values)
+
   return (
-    <div style={{marginTop: 20, width: '100%'}}>
-        <Formik
-        initialValues={{
-            title: '',
-            content: ''
-        }}
-        onSubmit={() => {
-
-        }}
-        >
-            {
-                ({isSubmitting}) => (
-                    <Box sx={{display: 'flex', flexDirection: 'column'}} >
-                        <TextField label="Title" name="title" />
-                        <TextField label='Content' name='content' multiline minRows={1} maxRows={3} sx={{marginY: 4}} />
-                        <Button variant='contained' disabled={isSubmitting}>
-                            Submit
-                        </Button>
-                    </Box>
-                )
-            }
-
-        </Formik>
-        
+    <div style={{ marginTop: 20, width: '100%' }}>
+      <Form method='post' onSubmit={formik.handleSubmit} style={{display: 'flex', flexDirection: 'column'}} >
+        <TextField
+          onChange={formik.handleChange}
+          value={formik.values.title}
+          label='Title'
+          name='title'
+        />
+        <TextField
+          onChange={formik.handleChange}
+          value={formik.values.content}
+          label='Content'
+          name='content'
+          multiline
+          minRows={1}
+          maxRows={3}
+          sx={{ marginY: 4 }}
+        />
+        <Button type='submit' variant='contained' disabled={formik.isSubmitting}>
+          Submit
+        </Button>
+      </Form>
     </div>
-  )
-}
+  );
+};
 
-export default NoteForm
+export default NoteForm;

@@ -4,7 +4,10 @@ import styles from './index.css'
 import NoteForm from './noteform';
 import ShowNotes from './shownotes';
 
-const NewNote = () => {
+const NewNote = (props) => {
+  const {
+    notes
+  } = props
   return (
     <Container sx={{marginTop: 15}}>
       <div>
@@ -15,7 +18,7 @@ const NewNote = () => {
       </div>
       <Box sx={{display: 'flex', flexDirection: 'row', padding: 2, marginTop: 2}} >
         <NoteForm />
-        <ShowNotes isEmpty={true} />
+        <ShowNotes isEmpty={notes} />
       </Box>
      
     </Container>
