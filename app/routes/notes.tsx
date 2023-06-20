@@ -1,17 +1,20 @@
 import { Box, Container, Divider, Typography } from '@mui/material';
-import { useLoaderData, useActionData } from '@remix-run/react';
+import { useLoaderData, useNavigation } from '@remix-run/react';
 
 import NoteForm from '~/components/newNote/noteform';
 import NoteList from '~/components/newNote/notelist';
 
 import styles from '~/components/newNote/index.css'
 
-import { getNotes, createNote } from '~/api/index';
+import { getNotes, createNote, deleteNote } from '~/api/index';
 import { json, type ActionArgs } from '@remix-run/node';
 
 export default function NotesPage() {
   const data = useLoaderData();
-  const newData = useActionData()
+  const navigate = useNavigation()
+  
+
+  const isSubmitting = navigate.state ==="submitting"
 
   return (
     <Container sx={{ marginTop: 15 }}>
@@ -24,7 +27,7 @@ export default function NotesPage() {
       <Box
         sx={{ display: 'flex', flexDirection: 'row', padding: 2, marginTop: 2 }}
       >
-        <NoteForm />
+        <NoteForm isSubmitting={isSubmitting} />
         <NoteList data={data} />
       </Box>
     </Container>
@@ -36,22 +39,22 @@ export async function loader() {
   return data || null;
 }
 
-export async function action({request}: ActionArgs) {
+export async function action({request, params}: ActionArgs) {
  const form = await request.formData()
  const title = form.get('title')
  const content = form.get('content')
 
- const fields = {title, content}
- console.log(fields)
+ if(title !== null && content !== null){
+   await createNote({ title, content})
+ }
 
- await createNote({ title, content})
+ return json({message: 'ok'})
 
- return json({fields})
 }
 
 export function links() {
     return [{
         rel: 'stylesheet',
         href: styles
-    }];
+    },];
 }

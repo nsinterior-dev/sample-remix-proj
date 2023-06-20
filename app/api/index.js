@@ -67,7 +67,10 @@ export async function updateNote (id){
 export async function deleteNote (id){
     try{
         const response = await fetch(`http://${host}/${note}/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers:{
+                "Content-Type":"application/json"
+            },
         })
         return response.json();
     }
